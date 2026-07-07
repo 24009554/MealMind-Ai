@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartPantry AI</title>
+    <style>
+        /* CSS Variables for Light/Dark Mode */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --accent: #28a745;
+            --shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #f4f4f4;
+            --accent: #00ff88;
+            --shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex; justify-content: center; padding-top: 50px; 
+            transition: background 0.3s;
+        }
+        .card { 
+            background: var(--card-bg); padding: 30px; border-radius: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); width: 350px; 
+        }
+        
+        /* Neon Glow Buttons */
+        button { 
+            width: 100%; padding: 10px; background: var(--accent); color: white; 
+            border: none; border-radius: 8px; cursor: pointer; margin-bottom: 5px;
+            transition: 0.3s; font-weight: bold;
+        }
+        button:hover { box-shadow: var(--shadow); transform: scale(1.02); }
+        .secondary-btn { background: #6c757d; }
+        
+        .nav-bar { display: flex; gap: 5px; margin-bottom: 20px; }
+        .nav-bar button { font-size: 11px; padding: 6px; }
+
+        #about-container, #dashboard { display: none; }
+
+        /* Default (Light Mode) background */
+body {
+    background-image: url('food.jpg'); /* Replace with your actual path */
+    background-size: cover;
+    background-position: center;
+    transition: background 0.3s ease;
+}
+
+/* When dark-mode is active */
+body.dark-mode {
+    background-image: url('food2.jpg'); /* Replace with your actual path */
+}
+    </style>
+</head>
+<body>
+
+    <div class="card" id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username (guest)" style="width:100%; padding:10px; margin-bottom:10px;">
+        <input type="password" id="password" placeholder="Password (password1)" style="width:100%; padding:10px; margin-bottom:10px;">
+        <button onclick="login()">Enter SmartPantry</button>
+        <button class="secondary-btn" onclick="showSection('about-container')">About Us</button>
+        <button onclick="toggleTheme()" style="margin-top:20px; background:transparent; border:1px solid var(--accent); color:var(--accent);">Toggle Dark/Light Mode</button>
+    </div>
+
+    <div class="card" id="about-container">
+        <h2>About SmartPantry</h2>
+        <p>SmartPantry uses AI to help you reduce food waste.</p>
+        <button class="secondary-btn" onclick="goBack()">Back</button>
+    </div>
+
+    <div class="card" id="dashboard">
+        <div class="nav-bar">
+            <button onclick="showSection('dashboard')">Home</button>
+            <button onclick="showSection('about-container')">About</button>
+            <button onclick="location.reload()" class="secondary-btn">Logout</button>
+        </div>
+        <h1>Welcome, <span id="display-user"></span>!</h1>
+        <button onclick="toggleTheme()">Switch Mode</button>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function showSection(sectionId) {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('about-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if (user === "guest" && pass === "password1") {
+                showSection('dashboard');
+                document.getElementById('display-user').innerText = user;
+            } else {
+                alert("Invalid Login.");
+            }
+        }
+
+        function goBack() {
+            const user = document.getElementById('display-user').innerText;
+            user ? showSection('dashboard') : showSection('login-container');
+        }
+    </script>
+</body>
+</html>
