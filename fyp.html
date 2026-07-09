@@ -2,103 +2,223 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SmartPantry AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealMind AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Playball&family=Poppins:wght@400;600&display=swap%22 rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+   
     <style>
-        /* CSS Variables for Light/Dark Mode */
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333;
-            --accent: #28a745;
-            --shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            --light-bg: #e2f0d9; /* Light green top */
+            --dark-bg: #1e4620;  /* Dark green bottom */
+            --text-dark: #1e4620;
+            --accent-red: #ff3b3b;
+            --white: #ffffff;
         }
-        body.dark-mode {
-            --bg-color: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text-color: #f4f4f4;
-            --accent: #00ff88;
-            --shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+ 
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* Split background to match poster */
+            background: linear-gradient(to bottom, var(--light-bg) 75%, var(--dark-bg) 25%);
+            position: relative;
+            overflow-x: hidden;
         }
-
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex; justify-content: center; padding-top: 50px; 
-            transition: background 0.3s;
+ 
+        /* Decorative Side Food Images (Add your image URLs here) */
+        .side-image {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            z-index: 0;
         }
-        .card { 
-            background: var(--card-bg); padding: 30px; border-radius: 15px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); width: 350px; 
+        .left-food { left: -100px; /* background-image: url('assets/left-plate.png'); */ }
+        .right-food { right: -100px; /* background-image: url('assets/right-plate.png'); */ }
+ 
+        /* Header Styling */
+        .header-container {
+            text-align: center;
+            z-index: 10;
+            margin-bottom: 20px;
+            margin-top: 20px;
         }
-        
-        /* Neon Glow Buttons */
-        button { 
-            width: 100%; padding: 10px; background: var(--accent); color: white; 
-            border: none; border-radius: 8px; cursor: pointer; margin-bottom: 5px;
-            transition: 0.3s; font-weight: bold;
+        .logo-small {
+            width: 50px;
+            margin-bottom: -10px;
         }
-        button:hover { box-shadow: var(--shadow); transform: scale(1.02); }
-        .secondary-btn { background: #6c757d; }
-        
-        .nav-bar { display: flex; gap: 5px; margin-bottom: 20px; }
-        .nav-bar button { font-size: 11px; padding: 6px; }
-
-        #about-container, #dashboard { display: none; }
-
-        /* Default (Light Mode) background */
-body {
-    background-image: url('food.jpg'); /* Replace with your actual path */
-    background-size: cover;
-    background-position: center;
-    transition: background 0.3s ease;
-}
-
-/* When dark-mode is active */
-body.dark-mode {
-    background-image: url('food2.jpg'); /* Replace with your actual path */
-}
+        .eat-healthy {
+            font-family: 'Playball', cursive;
+            color: #739e44;
+            font-size: 42px;
+            margin: 0;
+            line-height: 1;
+        }
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 50px;
+            color: var(--text-dark);
+            margin: -5px 0 0 0;
+            letter-spacing: 1px;
+        }
+        .title-ai { color: var(--accent-red); }
+        .subtitle-badge {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+        }
+ 
+        /* Smartphone Mockup Container */
+        .smartphone {
+            background: var(--white);
+            width: 320px;
+            height: 550px;
+            border-radius: 35px;
+            border: 8px solid #000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+       
+        /* Top Notch */
+        .smartphone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #000;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 20;
+        }
+ 
+        /* App Screens inside the phone */
+        .app-screen {
+            padding: 40px 20px 20px;
+            height: 100%;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #login-container { display: flex; }
+ 
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+       
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.2s;
+        }
+        button:hover { background: #143316; }
+        .secondary-btn { background: #739e44; }
+        .secondary-btn:hover { background: #5c8135; }
+ 
+        /* Footer Text */
+        .footer-text {
+            color: var(--white);
+            text-align: center;
+            z-index: 10;
+            margin-top: 30px;
+            max-width: 500px;
+            font-size: 14px;
+        }
+        .footer-text a { color: var(--white); font-weight: 600; text-decoration: none; }
     </style>
 </head>
 <body>
-
-    <div class="card" id="login-container">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username (guest)" style="width:100%; padding:10px; margin-bottom:10px;">
-        <input type="password" id="password" placeholder="Password (password1)" style="width:100%; padding:10px; margin-bottom:10px;">
-        <button onclick="login()">Enter SmartPantry</button>
-        <button class="secondary-btn" onclick="showSection('about-container')">About Us</button>
-        <button onclick="toggleTheme()" style="margin-top:20px; background:transparent; border:1px solid var(--accent); color:var(--accent);">Toggle Dark/Light Mode</button>
+ 
+    <div class="side-image left-food"></div>
+    <div class="side-image right-food"></div>
+ 
+    <div class="header-container">
+        <h2 class="eat-healthy">Eat Healthy</h2>
+        <h4 style="margin:0; font-family:'Playball', cursive; color:var(--text-dark); font-size:24px;">With</h4>
+        <h1 class="title">MEALMIND<span class="title-ai">-AI</span></h1>
+        <div class="subtitle-badge">Your Personal AI Meal Planner</div>
     </div>
-
-    <div class="card" id="about-container">
-        <h2>About SmartPantry</h2>
-        <p>SmartPantry uses AI to help you reduce food waste.</p>
-        <button class="secondary-btn" onclick="goBack()">Back</button>
-    </div>
-
-    <div class="card" id="dashboard">
-        <div class="nav-bar">
-            <button onclick="showSection('dashboard')">Home</button>
-            <button onclick="showSection('about-container')">About</button>
-            <button onclick="location.reload()" class="secondary-btn">Logout</button>
+ 
+    <div class="smartphone">
+       
+        <div class="app-screen" id="login-container">
+            <h3 style="text-align:center; color:var(--text-dark);">Welcome Back</h3>
+            <input type="text" id="username" placeholder="Username (guest)">
+            <input type="password" id="password" placeholder="Password (password1)">
+            <button onclick="login()">Enter MealMind</button>
+            <button class="secondary-btn" onclick="showSection('about-container')">About Us</button>
         </div>
-        <h1>Welcome, <span id="display-user"></span>!</h1>
-        <button onclick="toggleTheme()">Switch Mode</button>
+ 
+        <div class="app-screen" id="about-container">
+            <h3 style="color:var(--text-dark);">About MealMind AI</h3>
+            <p style="font-size:14px; text-align:center;">MealMind AI uses advanced technology to help you reduce food waste and eat healthier by creating recipes from what you already have.</p>
+            <button class="secondary-btn" style="margin-top:auto;" onclick="goBack()">Back</button>
+        </div>
+ 
+        <div class="app-screen" id="dashboard" style="justify-content: flex-start;">
+            <h3 style="color:var(--text-dark); text-align:center;">Hi, <span id="display-user"></span>!</h3>
+            <p style="font-size:13px; text-align:center;">Your AI planner is ready. Use the chat widget below to start finding recipes.</p>
+           
+            <button class="secondary-btn" style="margin-top:auto;" onclick="showSection('about-container')">About</button>
+            <button onclick="location.reload()">Logout</button>
+        </div>
+ 
     </div>
-
+ 
+    <div class="footer-text">
+        <p>Discover nutritious recipes based on your ingredients, dietary needs, and personal preferences!</p>
+        <p style="border: 1px solid white; display:inline-block; padding: 5px 10px;">FIND YOUR NEXT MEAL TODAY!</p>
+        <p><a href="#">www.mealmind-ai.com</a></p>
+    </div>
+ 
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+        createChat({
+            webhookUrl: 'https://n8ngc.codeblazar.org/webhook/c9528d69-5d64-42d3-bc16-21b52d646a1e/chat',
+        });
+    </script>
+ 
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-
         function showSection(sectionId) {
-            document.getElementById('login-container').style.display = 'none';
-            document.getElementById('about-container').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById(sectionId).style.display = 'block';
+            document.querySelectorAll('.app-screen').forEach(el => el.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'flex';
         }
-
+ 
         function login() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
@@ -106,10 +226,10 @@ body.dark-mode {
                 showSection('dashboard');
                 document.getElementById('display-user').innerText = user;
             } else {
-                alert("Invalid Login.");
+                alert("Invalid Login. Use guest / password1");
             }
         }
-
+ 
         function goBack() {
             const user = document.getElementById('display-user').innerText;
             user ? showSection('dashboard') : showSection('login-container');
