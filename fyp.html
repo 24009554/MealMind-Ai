@@ -1,239 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MealMind AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Playball&family=Poppins:wght@400;600&display=swap%22 rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-   
-    <style>
-        :root {
-            --light-bg: #e2f0d9; /* Light green top */
-            --dark-bg: #1e4620;  /* Dark green bottom */
-            --text-dark: #1e4620;
-            --accent-red: #ff3b3b;
-            --white: #ffffff;
-        }
- 
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /* Split background to match poster */
-            background: linear-gradient(to bottom, var(--light-bg) 75%, var(--dark-bg) 25%);
-            position: relative;
-            overflow-x: hidden;
-        }
- 
-        /* Decorative Side Food Images (Add your image URLs here) */
-        .side-image {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .left-food { left: -100px; /* background-image: url('assets/left-plate.png'); */ }
-        .right-food { right: -100px; /* background-image: url('assets/right-plate.png'); */ }
- 
-        /* Header Styling */
-        .header-container {
-            text-align: center;
-            z-index: 10;
-            margin-bottom: 20px;
-            margin-top: 20px;
-        }
-        .logo-small {
-            width: 50px;
-            margin-bottom: -10px;
-        }
-        .eat-healthy {
-            font-family: 'Playball', cursive;
-            color: #739e44;
-            font-size: 42px;
-            margin: 0;
-            line-height: 1;
-        }
-        .title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 50px;
-            color: var(--text-dark);
-            margin: -5px 0 0 0;
-            letter-spacing: 1px;
-        }
-        .title-ai { color: var(--accent-red); }
-        .subtitle-badge {
-            background-color: var(--text-dark);
-            color: var(--white);
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 10px;
-        }
- 
-        /* Smartphone Mockup Container */
-        .smartphone {
-            background: var(--white);
-            width: 320px;
-            height: 550px;
-            border-radius: 35px;
-            border: 8px solid #000;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            position: relative;
-            z-index: 10;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-       
-        /* Top Notch */
-        .smartphone::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 25px;
-            background: #000;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            z-index: 20;
-        }
- 
-        /* App Screens inside the phone */
-        .app-screen {
-            padding: 40px 20px 20px;
-            height: 100%;
-            box-sizing: border-box;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-        }
-        #login-container { display: flex; }
- 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-       
-        button {
-            width: 100%;
-            padding: 12px;
-            background: var(--text-dark);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: 0.2s;
-        }
-        button:hover { background: #143316; }
-        .secondary-btn { background: #739e44; }
-        .secondary-btn:hover { background: #5c8135; }
- 
-        /* Footer Text */
-        .footer-text {
-            color: var(--white);
-            text-align: center;
-            z-index: 10;
-            margin-top: 30px;
-            max-width: 500px;
-            font-size: 14px;
-        }
-        .footer-text a { color: var(--white); font-weight: 600; text-decoration: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MealMind AI — Cook with what you already have</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playball&family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<style>
+  :root {
+    --light-bg: #e4f2c9;
+    --dark-bg: #12301b;
+    --forest-soft: #234a2c;
+    --text-dark: #16311d;
+    --leaf: #6cbe45;
+    --leaf-deep: #4f9a30;
+    --tomato: #eb5a2b;
+    --tomato-dark: #c94a20;
+    --citrus: #f2a93c;
+    --paper: #fffdf7;
+    --line: rgba(22, 49, 29, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    background: var(--light-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* subtle organic texture, echoes the poster's mottled background without copying any artwork */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(108,190,69,0.14) 0, transparent 40%),
+      radial-gradient(circle at 92% 30%, rgba(235,90,43,0.08) 0, transparent 38%),
+      radial-gradient(circle at 20% 80%, rgba(18,48,27,0.08) 0, transparent 42%),
+      radial-gradient(circle at 85% 90%, rgba(108,190,69,0.12) 0, transparent 40%);
+  }
+
+  h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--text-dark); margin: 0; font-weight: 800; }
+  .script { font-family: 'Playball', cursive; font-weight: 400; }
+
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--leaf-deep);
+    font-weight: 500;
+  }
+
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* ================= LOGIN GATE ================= */
+  #login-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, var(--light-bg) 0%, #cfe7ac 55%, var(--dark-bg) 130%);
+    padding: 24px;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  #login-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .login-card {
+    background: var(--paper);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    padding: 40px 34px 32px;
+    box-shadow: 0 30px 70px rgba(18,48,27,0.28);
+    border: 1px solid var(--line);
+  }
+  .login-card .brand-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .login-card .brand-mark img { width: 68px; height: 68px; object-fit: contain; }
+  .login-card .brand-mark span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--text-dark);
+  }
+  .login-card .brand-mark span em { font-style: normal; color: var(--tomato); }
+
+  .login-card h2 { text-align: center; font-size: 22px; margin-top: 18px; }
+  .login-card p.sub {
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--forest-soft);
+    margin-top: 6px;
+    margin-bottom: 26px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--forest-soft);
+    margin-bottom: 6px;
+  }
+  .field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    transition: border-color 0.15s ease;
+  }
+  .field input:focus {
+    outline: none;
+    border-color: var(--leaf);
+  }
+  .field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -6px;
+    margin-bottom: 18px;
+  }
+  .field-row a { font-size: 12px; color: var(--leaf-deep); text-decoration: none; font-weight: 600; }
+
+  .login-error {
+    display: none;
+    background: rgba(235,90,43,0.1);
+    border: 1px solid rgba(235,90,43,0.3);
+    color: var(--tomato-dark);
+    font-size: 12.5px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  .login-error.show { display: block; }
+
+  .btn-primary {
+    width: 100%;
+    background: var(--tomato);
+    color: #fff;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .btn-primary:hover { background: var(--tomato-dark); }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: var(--forest-soft);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .btn-guest {
+    width: 100%;
+    background: transparent;
+    border: 1.5px solid var(--leaf);
+    color: var(--leaf-deep);
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .btn-guest:hover { background: rgba(108,190,69,0.08); }
+
+  .login-card .demo-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--forest-soft);
+    opacity: 0.7;
+    margin-top: 18px;
+  }
+
+  /* ================= MAIN SITE ================= */
+  #site { opacity: 0; transition: opacity 0.5s ease; }
+  #site.revealed { opacity: 1; }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(228, 242, 201, 0.86);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .brand img { width: 48px; height: 48px; object-fit: contain; }
+  .brand-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 19px; color: var(--text-dark); }
+  .brand-text em { font-style: normal; color: var(--tomato); }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links a { text-decoration: none; font-size: 14.5px; font-weight: 600; color: var(--forest-soft); }
+  .nav-cta { background: var(--dark-bg); color: #fff !important; padding: 10px 20px; border-radius: 100px; font-size: 13.5px; }
+
+  /* ---- HERO ---- */
+  .hero { padding: 100px 0 90px; }
+  .hero .wrap { display: flex; justify-content: center; text-align: center; }
+  .hero-content { max-width: 700px; }
+  .hero h1 { font-size: clamp(38px, 5vw, 62px); line-height: 1.06; letter-spacing: -0.01em; }
+  .hero h1 em { font-style: normal; color: var(--tomato); }
+  .hero p.lede { margin: 20px auto 0; font-size: 18px; line-height: 1.55; color: var(--forest-soft); max-width: 46ch; font-weight: 400; }
+  .hero-ctas { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .btn-ghost {
+    border: 1.5px solid var(--text-dark); color: var(--text-dark); background: transparent;
+    padding: 13px 24px; border-radius: 100px; font-weight: 600; font-size: 14.5px; text-decoration: none; display: inline-block;
+  }
+  .hero-ctas .btn-primary { width: auto; padding: 14px 26px; border-radius: 100px; text-decoration: none; display: inline-block; }
+  /* ---- HOW IT WORKS ---- */
+  .how { background: var(--dark-bg); padding: 84px 0; }
+  .how .label { color: var(--leaf); }
+  .how h2 { color: #fff; font-size: clamp(28px, 3.2vw, 40px); margin-top: 10px; max-width: 20ch; }
+  .steps { margin-top: 52px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .step { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 26px; }
+  .step .num { font-family: 'JetBrains Mono', monospace; color: var(--citrus); font-size: 13px; }
+  .step h3 { color: #fff; font-size: 19px; margin-top: 12px; }
+  .step p { color: rgba(255,255,255,0.68); font-size: 14.5px; line-height: 1.6; margin-top: 10px; font-weight: 400; }
+
+  /* ---- CHAT ---- */
+  .chat-section { padding: 90px 0; }
+  .chat-section .intro { text-align: center; max-width: 560px; margin: 0 auto 40px; }
+  .chat-section h2 { font-size: clamp(26px, 3.2vw, 36px); margin-top: 10px; }
+  .chat-section p.sub { color: var(--forest-soft); margin-top: 12px; font-size: 15.5px; line-height: 1.6; font-weight: 400; }
+  .chat-frame { max-width: 640px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 24px 55px rgba(18,48,27,0.16); overflow: hidden; }
+  .chat-frame .chat-topline { background: var(--dark-bg); padding: 16px 22px; display: flex; align-items: center; gap: 10px; }
+  .chat-frame .chat-topline .pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--leaf); }
+  .chat-frame .chat-topline span { color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; }
+  #n8n-chat-mount { min-height: 500px; }
+
+  /* ---- ABOUT ---- */
+  .about { padding: 96px 0; background: var(--paper); border-top: 1px solid var(--line); }
+  .about-head { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+  .about-head h2 { font-size: clamp(28px, 3.4vw, 40px); margin-top: 10px; }
+
+  .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
+  .about-item { background: var(--light-bg); border-radius: 16px; padding: 26px; }
+  .about-item .icon { font-size: 26px; }
+  .about-item h3 { font-size: 17px; margin-top: 14px; }
+  .about-item p { font-size: 14px; line-height: 1.6; color: var(--forest-soft); margin-top: 8px; font-weight: 400; }
+
+  .mission {
+    background: var(--dark-bg);
+    border-radius: 20px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .mission .script { color: var(--leaf); font-size: 30px; }
+  .mission blockquote {
+    margin: 8px 0 0;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.35;
+  }
+  .mission .story p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.7; margin: 0 0 14px; font-weight: 400; }
+  .mission .stat-row { display: flex; gap: 24px; margin-top: 20px; }
+  .mission .stat { border-left: 2px solid var(--tomato); padding-left: 12px; }
+  .mission .stat .figure { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 26px; color: #fff; }
+  .mission .stat .desc { font-size: 11.5px; color: var(--leaf); margin-top: 2px; line-height: 1.4; max-width: 16ch; }
+
+  /* ---- FOOTER ---- */
+  footer { background: var(--text-dark); padding: 44px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer .brand-text { color: #fff; }
+  footer p { color: rgba(255,255,255,0.55); font-size: 13px; margin: 0; font-weight: 400; }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero { padding: 70px 0; }
+    .steps { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .mission { grid-template-columns: 1fr; padding: 32px; }
+    .nav-links { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    #login-gate, #site { transition: none; }
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--tomato);
+    outline-offset: 2px;
+  }
+</style>
 </head>
 <body>
- 
-    <div class="side-image left-food"></div>
-    <div class="side-image right-food"></div>
- 
-    <div class="header-container">
-        <h2 class="eat-healthy">Eat Healthy</h2>
-        <h4 style="margin:0; font-family:'Playball', cursive; color:var(--text-dark); font-size:24px;">With</h4>
-        <h1 class="title">MEALMIND<span class="title-ai">-AI</span></h1>
-        <div class="subtitle-badge">Your Personal AI Meal Planner</div>
+
+<!-- ================= LOGIN GATE ================= -->
+<div id="login-gate">
+  <div class="login-card">
+    <div class="brand-mark">
+      <img src="assets/logo.png" alt="MealMind AI logo">
+      <span>MealMind<em>-AI</em></span>
     </div>
- 
-    <div class="smartphone">
-       
-        <div class="app-screen" id="login-container">
-            <h3 style="text-align:center; color:var(--text-dark);">Welcome Back</h3>
-            <input type="text" id="username" placeholder="Username (guest)">
-            <input type="password" id="password" placeholder="Password (password1)">
-            <button onclick="login()">Enter MealMind</button>
-            <button class="secondary-btn" onclick="showSection('about-container')">About Us</button>
-        </div>
- 
-        <div class="app-screen" id="about-container">
-            <h3 style="color:var(--text-dark);">About MealMind AI</h3>
-            <p style="font-size:14px; text-align:center;">MealMind AI uses advanced technology to help you reduce food waste and eat healthier by creating recipes from what you already have.</p>
-            <button class="secondary-btn" style="margin-top:auto;" onclick="goBack()">Back</button>
-        </div>
- 
-        <div class="app-screen" id="dashboard" style="justify-content: flex-start;">
-            <h3 style="color:var(--text-dark); text-align:center;">Hi, <span id="display-user"></span>!</h3>
-            <p style="font-size:13px; text-align:center;">Your AI planner is ready. Use the chat widget below to start finding recipes.</p>
-           
-            <button class="secondary-btn" style="margin-top:auto;" onclick="showSection('about-container')">About</button>
-            <button onclick="location.reload()">Logout</button>
-        </div>
- 
+    <h2>Welcome back</h2>
+    <p class="sub">Sign in to pick up where you left off, or jump straight in as a guest.</p>
+
+    <div class="login-error" id="login-error">That username or password doesn't match. Try <strong>guest</strong> / <strong>password1</strong>.</div>
+
+    <form id="login-form" onsubmit="return handleLogin(event)">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="guest" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="field-row">
+        <span></span>
+        <a href="#">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+
+    <div class="divider">or</div>
+    <button class="btn-guest" onclick="enterGuest()">Continue as guest</button>
+
+    <p class="demo-note">Demo build — no account needed to use the chat.</p>
+  </div>
+</div>
+
+<!-- ================= MAIN SITE ================= -->
+<div id="site">
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="MealMind AI logo">
+      <span class="brand-text">MealMind<em>-AI</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#chat">Chat</a>
+      <a href="#about">About</a>
+      <a class="nav-cta" href="#chat">Start cooking</a>
     </div>
- 
-    <div class="footer-text">
-        <p>Discover nutritious recipes based on your ingredients, dietary needs, and personal preferences!</p>
-        <p style="border: 1px solid white; display:inline-block; padding: 5px 10px;">FIND YOUR NEXT MEAL TODAY!</p>
-        <p><a href="#">www.mealmind-ai.com</a></p>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-content">
+      <p class="label">Zero-waste cooking, one chat away</p>
+      <h1>Cook something real<br>from what's <em>already</em><br>in your kitchen.</h1>
+      <p class="lede">Tell MealMind what you've got — three ingredients or thirty — and it finds a real recipe that fits, screened for your allergies before it ever reaches you.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#chat">Start chatting →</a>
+        <a class="btn-ghost" href="#how">See how it works</a>
+      </div>
     </div>
- 
-    <script type="module">
-        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-        createChat({
-            webhookUrl: 'https://n8ngc.codeblazar.org/webhook/c9528d69-5d64-42d3-bc16-21b52d646a1e/chat',
-        });
-    </script>
- 
-    <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.app-screen').forEach(el => el.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'flex';
-        }
- 
-        function login() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            if (user === "guest" && pass === "password1") {
-                showSection('dashboard');
-                document.getElementById('display-user').innerText = user;
-            } else {
-                alert("Invalid Login. Use guest / password1");
-            }
-        }
- 
-        function goBack() {
-            const user = document.getElementById('display-user').innerText;
-            user ? showSection('dashboard') : showSection('login-container');
-        }
-    </script>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <p class="label">The process</p>
+    <h2>From "what do I have" to "what do I cook," in three steps.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Tell us what's in the kitchen</h3>
+        <p>Type your ingredients and any allergies straight into the chat — no forms, no dropdowns.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>We check what's actually safe</h3>
+        <p>Real recipes get pulled and screened against your allergies before anything is suggested — not after.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Get a recipe you can start now</h3>
+        <p>A complete, step-by-step recipe built around what you already own — no grocery run required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="chat-section" id="chat">
+  <div class="wrap">
+    <div class="intro">
+      <p class="label">No account needed</p>
+      <h2>Just start talking.</h2>
+      <p class="sub">MealMind works the moment you open it — say what you have and go.</p>
+    </div>
+    <div class="chat-frame">
+      <div class="chat-topline"><div class="pulse"></div><span>MealMind is online</span></div>
+      <div id="n8n-chat-mount"></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-head">
+      <p class="label">Why we built this</p>
+      <h2>Food waste starts with not knowing what to cook.</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-item">
+        <div class="icon">🥕</div>
+        <h3>Start from your fridge, not a shopping list</h3>
+        <p>Most recipe apps assume you're about to go grocery shopping. MealMind starts from what's already sitting there.</p>
+      </div>
+      <div class="about-item">
+        <div class="icon">🛡️</div>
+        <h3>Allergy-safe by design</h3>
+        <p>Recipes are filtered against your stated allergies before generation — not a promise made after the fact.</p>
+      </div>
+      <div class="about-item">
+        <div class="icon">💬</div>
+        <h3>Talk to it like a person</h3>
+        <p>No dropdowns or filters to configure. Say what you have in plain language and get a real answer back.</p>
+      </div>
+    </div>
+
+    <div class="mission">
+      <div>
+        <p class="script">Our mission</p>
+        <blockquote>Nothing in your kitchen should go to waste for lack of a good idea.</blockquote>
+      </div>
+      <div class="story">
+        <p>MealMind AI was built for anyone who cooks occasionally, doesn't want to overthink it, and would rather use what's already there than order in. It's a class project, not a startup pitch — but the problem it's solving is a real one.</p>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="figure">1</div>
+            <div class="desc">message to get a recipe, no signup required</div>
+          </div>
+          <div class="stat">
+            <div class="figure">0</div>
+            <div class="desc">unsafe recipes reach you — filtered before generation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand-text">MealMind<em style="font-style:normal;color:var(--tomato);">-AI</em></span>
+    <p>Built for cooking with what you've got.</p>
+  </div>
+</footer>
+
+</div><!-- /#site -->
+
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  window.__initMealMindChat = function () {
+    createChat({
+      webhookUrl: 'https://n8ngc.codeblazar.org/webhook/c9528d69-5d64-42d3-bc16-21b52d646a1e/chat',
+      target: '#n8n-chat-mount',
+      mode: 'fullscreen',
+      showWelcomeScreen: false,
+      initialMessages: [
+        "Hi! I'm MealMind. Tell me what's in your kitchen and any allergies, and I'll find you a recipe."
+      ],
+    });
+  };
+</script>
+
+<script>
+  function revealSite() {
+    document.getElementById('login-gate').classList.add('hidden');
+    const site = document.getElementById('site');
+    site.classList.add('revealed');
+    if (window.__initMealMindChat && !window.__chatInitialized) {
+      window.__initMealMindChat();
+      window.__chatInitialized = true;
+    }
+  }
+
+  function handleLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value;
+    const errorBox = document.getElementById('login-error');
+    if (user === "guest" && pass === "password1") {
+      errorBox.classList.remove('show');
+      revealSite();
+    } else {
+      errorBox.classList.add('show');
+    }
+    return false;
+  }
+
+  function enterGuest() {
+    revealSite();
+  }
+</script>
+
 </body>
 </html>
